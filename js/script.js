@@ -438,7 +438,7 @@ function createCarCard(car, gallery) {
             </div>
             <div class="car-details">
                 <div class="car-detail" data-ru="Год: ${car.year}" data-kz="Жыл: ${car.year}">Год: ${car.year}</div>
-                <div class="car-detail" data-ru="КПП: ${car.transmission}" data-kz="Қозғалтқыш: ${car.transmission}">КПП: ${car.transmission}</div>
+                <div class="car-detail" data-ru="КПП: ${car.transmission}" data-kz="Қорап түрі: ${car.transmission}">КПП: ${car.transmission}</div>
                 <div class="car-detail" data-ru="Тип двигателя: ${car.engineType}" data-kz="Қозғалтқыш түрі: ${car.engineType}">Тип двигателя: ${car.engineType}</div>
             </div>
         </div>
@@ -558,7 +558,7 @@ function showCarDetail(car) {
         { label: currentLanguage === 'kz' ? 'Мекен-жай' : 'Адрес', value: car.address },
         { label: currentLanguage === 'kz' ? 'Жыл' : 'Год выпуска', value: car.year },
         { label: currentLanguage === 'kz' ? 'Түс' : 'Цвет', value: car.color },
-        { label: currentLanguage === 'kz' ? 'Қозғалтқыш' : 'КПП', value: car.transmission },
+        { label: currentLanguage === 'kz' ? 'Қорап түрі' : 'КПП', value: car.transmission },
         { label: currentLanguage === 'kz' ? 'Қозғалтқыш түрі' : 'Тип двигателя', value: car.engineType },
         { label: currentLanguage === 'kz' ? 'Қозғалтқыш көлемі' : 'Объем двигателя', value: car.engine, suffix: 'L' },
         { label: currentLanguage === 'kz' ? 'Қуат' : 'Мощность', value: car.power, suffix: currentLanguage === 'kz' ? ' а.к.' : ' л.с.' },
@@ -566,7 +566,7 @@ function showCarDetail(car) {
         { label: currentLanguage === 'kz' ? 'Макс. жылдамдық' : 'Макс. скорость', value: car.maxSpeed, suffix: currentLanguage === 'kz' ? ' км/сағ' : ' км/ч' },
         { label: currentLanguage === 'kz' ? 'Үдеу 0-100 км/сағ' : 'Разгон 0-100 км/ч', value: car.acceleration, suffix: currentLanguage === 'kz' ? ' сек' : ' сек' },
         { label: currentLanguage === 'kz' ? 'Өлшемдері (Ұ×Е×Б)' : 'Габариты (Д×Ш×В)', value: car.dimensions, suffix: currentLanguage === 'kz' ? ' мм' : ' мм' },
-        { label: currentLanguage === 'kz' ? 'Шина өлшемі' : 'Размер шин', value: car.tireSize }
+        { label: currentLanguage === 'kz' ? 'Диск өлшемі' : 'Размер диска', value: car.tireSize }
     ]
     .filter(item => item.value !== null && item.value !== undefined && item.value !== '')
     .filter(item => shouldShowField(item.value))
@@ -602,27 +602,8 @@ function showCarDetail(car) {
         <h2>${car.name}</h2>
         
         <div class="price-section">
-    <div class="average-price">${currentLanguage === 'kz' ? 'Басқа салондарда: ' : 'В других салонах: '}${car.averagePrice.toLocaleString()} ₸</div>
-</div>
-        
-        <div class="bank-offers">
-            <h4>${currentLanguage === 'kz' ? 'Банк ұсыныстары' : 'Предложения от банков'}</h4>
-            <p><strong>${currentLanguage === 'kz' ? 'Автокөліктің құны:' : 'Стоимость автомобиля:'}</strong> ${car.price.toLocaleString()} ₸</p>
-            <p><strong>${currentLanguage === 'kz' ? 'Бастапқы төлем:' : 'Первоначальный взнос:'}</strong> ${Math.round(car.price * 0.1).toLocaleString()} ₸</p>
-            
-            <div class="month-options">
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 12, event)">12 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 24, event)">24 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 36, event)">36 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 48, event)">48 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 60, event)">60 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 72, event)">72 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-                <div class="month-btn" onclick="calculatePayment(${car.price}, 84, event)">84 ${currentLanguage === 'kz' ? 'ай' : 'мес'}</div>
-            </div>
-            
-            <div class="payment-info" id="paymentInfo">
-                <p>${currentLanguage === 'kz' ? 'Несие мерзімін таңдаңыз' : 'Выберите срок кредитования'}</p>
-            </div>
+            <div class="average-price">${currentLanguage === 'kz' ? 'Басқа салондарда: ' : 'В других салонах: '}${car.averagePrice.toLocaleString()} ₸</div>
+            <div class="our-price"><strong>${currentLanguage === 'kz' ? 'Біздің бағамыз: ' : 'Наша цена: '}${car.price.toLocaleString()} ₸</strong></div>
         </div>
         
         <div class="characteristics">
@@ -639,32 +620,6 @@ function showCarDetail(car) {
     
     initDetailGallery(images.length);
     detailFrame.classList.add('open');
-}
-
-function calculatePayment(price, months, event) {
-    if (event) {
-        event.stopPropagation();
-        document.querySelectorAll('.month-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-    }
-    
-    // Убрано увеличение цены на 10% за каждый год
-    const downPayment = price * 0.1; // 10% первоначальный взнос от исходной цены
-    const loanAmount = price - downPayment;
-    const interestRate = 0.30;
-    const monthlyRate = interestRate / 12;
-    
-    const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
-                         (Math.pow(1 + monthlyRate, months) - 1);
-    
-    const paymentInfo = document.getElementById('paymentInfo');
-    if (paymentInfo) {
-        paymentInfo.innerHTML = `
-            <h4>${currentLanguage === 'kz' ? 'Есептеу ' + months + ' айға' : 'Расчет на ' + months + ' мес'}:</h4>
-            <p><strong>${currentLanguage === 'kz' ? 'Ай сайынғы төлем:' : 'Ежемесячный платеж:'}</strong> ${Math.round(monthlyPayment).toLocaleString()} ₸</p>
-            <h5>${currentLanguage === 'kz' ? 'Көрсетілген есептеуде дәл емес есептеулер бар. Нақты шарттарды менеджерден тексеріңіз.' : 'Указанный расчет имеет неточные вычесления. Уточните у менеджера точные условия.'}</h5>
-        `;
-    }
 }
 
 // Переменные для управления галереей в детальном просмотре

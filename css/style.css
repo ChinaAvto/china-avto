@@ -819,6 +819,21 @@
     background: white;
 }
 
+@media (max-width: 768px) {
+    .car-gallery-image {
+        height: 500px;
+        object-fit: cover; /* или cover, в зависимости от желаемого эффекта */
+    }
+
+    .car-gallery-container {
+        height: auto; /* чтобы контейнер подстроился под изображение */
+    }
+
+    .car-gallery {
+        height: auto; /* чтобы всё адаптировалось */
+    }
+}
+
 
 
 
